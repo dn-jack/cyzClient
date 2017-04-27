@@ -174,32 +174,54 @@ header a span {
 }
 
 /*loagin*/
+.login-title  {
+	text-align: center;
+	display: block;
+}
+.login-title h1{
+	font-size: 20px;
+	color: white;
+	margin-top: 20px;
+	padding-bottom: 10px;
+}
+.login-title svg{
+	width: 80px;
+}
+.login .container{
+	height: 450px;
+	background: #F47115;
+}
+.login .form-login h5 {
+	display: none;
+}
 .login {
 	height: auto;
+	background: inherit;
 }
 .login .express {
+	display: none;
 	margin: inherit;
 	width: 60%;
 	margin: 20px auto;
-	display: block;
 }
 .container {
 	padding: inherit;
 	margin: inherit;
 }
 .login .form-login {
+	padding-top: 10px;
 	margin: inherit;
-	margin-top: 30px;
+	margin-top: 10px;
 	float: inherit;
 	width: 100%;
 }
-.login {
-
+.login .form-login ul li {
+	margin-top: 10px;
 }
 footer {
 	text-align: center;
 	padding: 0px 10px;
-    margin-top: 15px;
+    margin-top: 25px;
     font-size: 12px;
     margin-bottom: 30px;
 }
@@ -215,7 +237,6 @@ footer {
 }
 .order-search-page .filter tr td .date-form {
 	width: 100%;
-	display: none;
 }
 .order-search-page .filter tr td .date-form .pc-date {
 	display: none;

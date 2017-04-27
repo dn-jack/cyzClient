@@ -125,6 +125,7 @@
 			return this.$ool.children("li").size() > 0;
 		},
 		emptyOrders : function(){
+			this.$ool.find(".print").unbind("click");
 			this.$ool.empty();
 		},
 		load : function(){
@@ -161,6 +162,13 @@
 					function() {
 						that.$ool.data("nodata-display").hide(true);
 					});
+			this.$ool.on("click", ".handle .print", function(){
+				var $order = $(this).parents("li:first");
+				var bind = $order.data("bind");
+				alert(this);
+//				alert(bind);
+				//javascript:cyz.queryOrderPrint(JSON.stringify(bind));
+			});
 		}
 	};
 
@@ -225,7 +233,7 @@ $(function() {
 	})
 });
 function getDate(time){
-	var date = time?new Date(time):new Date();
+  var date = time?new Date(time):new Date();
   var seperator1 = "-";
   var month = date.getMonth() + 1;
   var strDate = date.getDate();
@@ -274,6 +282,7 @@ function getNowFormatDate() {
 $(".mobile-date").val(getNowFormatDate());
 
 $(".mobile-date").change(function(){
+	var orderList = $.orderList();
 	orderList.addQuery('beginTime', $(".mobile-date").val());
 	orderList.load();
 })

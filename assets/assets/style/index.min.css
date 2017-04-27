@@ -850,7 +850,7 @@ header .user-info .btn-group ul.dropdown-menu {
 	position: relative;
 }
 .order-search-page .filter tr td .date-form {
-	display: none;
+	visibility: hidden;
 	left: 0px;
 	top: 0px;
 	position: absolute;
@@ -1189,6 +1189,9 @@ header .user-info .btn-group ul.dropdown-menu {
 .login {
   height: 774px;
   background: url(../images/login-back.jpg) no-repeat;
+}
+.login-title  {
+	display: none;
 }
 .login .express {
   margin-top: 400px;

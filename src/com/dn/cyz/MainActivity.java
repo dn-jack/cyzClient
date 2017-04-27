@@ -109,6 +109,87 @@ public class MainActivity extends Activity {
 		public void audioStop(){
 			media.pause();
 		}
+		
+		@JavascriptInterface
+		public void queryOrderPrint(String orderStr) {
+			try {
+				Map<String,Object> order = getMapForJson(orderStr);
+				Toast.makeText(MainActivity.this.getApplicationContext(), "订单["+order.get("orderNo")+"]小票打印完成", 2000).show();
+				System.out.println(orderStr);
+				// Map<String,Object> order = getMapForJson(orderStr);
+				JSONObject orderJo = new JSONObject(orderStr);
+//				Toast.makeText(MainActivity.this.getApplicationContext(),
+//						"订单[" + orderJo.getString("orderNo") + "]小票打印完成", 2000).show();
+				// woyouService.printerSelfChecking(callback);
+				woyouService.enterPrinterBuffer(true);
+				woyouService.setAlignment(1, callback);
+				woyouService.printTextWithFont("********餐予者********", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				if(orderJo.has("merchantName"))
+				woyouService.printTextWithFont(orderJo.getString("merchantName"), FONT_STYLE, TITLE_FONT_SIZE, callback);
+				woyouService.lineWrap(1, callback);
+				woyouService.setAlignment(0, callback);
+				if(orderJo.has("orderTime"))
+				woyouService.printTextWithFont("下单时间：" + orderJo.getString("orderTime"), FONT_STYLE, NORMAL_FONT_SIZE,
+						callback);
+				woyouService.lineWrap(1, callback);
+				// woyouService.setAlignment(0, callback);
+				woyouService.printTextWithFont("--------------------------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(1, callback);
+				// woyouService.printTextWithFont("订单号："+order.get("orderNo"),FONT_STYLE,
+				// NORMAL_FONT_SIZE, callback);
+				// woyouService.lineWrap(1, callback);
+
+				JSONArray dishesJa = orderJo.getJSONArray("dishes");
+				if (dishesJa != null) {
+					for (int i = 0; i < dishesJa.length(); i++) {
+						JSONObject dishJo = dishesJa.getJSONObject(i);
+						woyouService.printTextWithFont(dishJo.getString("dishName") + "\t\t\t\t\t\t"
+								+ dishJo.getString("count") + "\t\t\t\t\t" + dishJo.getString("price2"), FONT_STYLE,
+								NORMAL_FONT_SIZE, callback);
+						woyouService.lineWrap(1, callback);
+					}
+				}
+				
+				woyouService.printTextWithFont("---------其他费用---------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				if(orderJo.has("boxPrice"))
+				woyouService.printTextWithFont("餐盒\t\t\t\t\t\t1\t\t\t\t\t" + orderJo.getString("boxPrice"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				woyouService.printTextWithFont("--------------------------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				if(orderJo.has("distributionPrice") && !orderJo.isNull("distributionPrice") && !"".equals(orderJo.getString("distributionPrice"))) {
+					woyouService.printTextWithFont("配送费\t\t\t\t\t\t" + orderJo.getString("distributionPrice"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+					woyouService.printTextWithFont("--------------------------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+					woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				}
+				
+				if(orderJo.has("orderPrice"))
+				woyouService.printTextWithFont("已付\t\t\t\t\t\t￥" + orderJo.getString("orderPrice"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				woyouService.printTextWithFont("--------------------------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				if(orderJo.has("consigneeAddress"))
+				woyouService.printTextWithFont(orderJo.getString("consigneeAddress"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				if(orderJo.has("userName"))
+				woyouService.printTextWithFont(orderJo.getString("userName"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				if(orderJo.has("phone"))
+				woyouService.printTextWithFont(orderJo.getString("phone"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(2, callback);// 换行 2代表换2行
+				woyouService.setAlignment(1, callback);
+				woyouService.printTextWithFont("**********完********", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.lineWrap(4, callback);
+				woyouService.commitPrinterBuffer();
+				
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
 		@JavascriptInterface
 		public void funAndroid(String orderStr) {
 
