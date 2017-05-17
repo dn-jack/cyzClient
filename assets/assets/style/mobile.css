@@ -242,6 +242,8 @@ footer {
 	display: none;
 }
 .order-search-page .filter tr td .date-form input.mobile-date {
+	height: 24px;
+	line-height: 24px;
 	background: none;
 	width: 200%;
 	border: 1px solid #E3E3E3;
@@ -282,4 +284,49 @@ footer {
 
 .loading img {
 	width: 35%;
+}
+
+.wrapper .container-fluid .row {
+  margin-top: 0px;
+}
+
+
+
+/*- home -*/
+.order-num .search-time {
+	position: fixed;
+	top: 50px;
+	z-index: 99;
+}
+.search-time {
+	padding: 10px;
+	height: inherit;
+	display: flex;
+}
+.search-time .form-control{
+	width: inherit;
+}
+
+.mobile-control {
+	
+	flex: 1;
+	display: block;
+}
+.pc-control {
+	display: none;
+}
+
+.scroll-num  {
+	position: absolute;
+	top: 70px;
+	overflow-y: inherit;
+}
+
+.order-num .row h3 {
+	padding: 10px 0px 10px 0px;
+    font-size: 40px;
+}
+
+.order-num .row.store .title h4 {
+	font-size: 16px;
 }

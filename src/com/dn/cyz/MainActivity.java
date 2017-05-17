@@ -100,6 +100,7 @@ public class MainActivity extends Activity {
 		static final String FONT_STYLE = "Microsoft Yahei";
 		static final int TITLE_FONT_SIZE = 30;
 		static final int NORMAL_FONT_SIZE = 24;
+		static final int BIG_TITLE_FONT_SIZE = 60;
 		@JavascriptInterface
 		public void audioPlay(){
 			media.seekTo(0);
@@ -121,9 +122,20 @@ public class MainActivity extends Activity {
 //				Toast.makeText(MainActivity.this.getApplicationContext(),
 //						"订单[" + orderJo.getString("orderNo") + "]小票打印完成", 2000).show();
 				// woyouService.printerSelfChecking(callback);
+				String platform_type = orderJo.getString("platform_type");
+				String platform = "";
+				if("elm".equals(platform_type)) {
+					platform = "饿了么";
+				} else if("mt".equals(platform_type)) {
+					platform = "美团外卖";
+				} else if("bdwm".equals(platform_type)) {
+					platform = "百度外卖";
+				} 
 				woyouService.enterPrinterBuffer(true);
 				woyouService.setAlignment(1, callback);
-				woyouService.printTextWithFont("********餐予者********", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("*****", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("#" + orderJo.getString("platformCount"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
+				woyouService.printTextWithFont(platform + "*****", FONT_STYLE, NORMAL_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("merchantName"))
 				woyouService.printTextWithFont(orderJo.getString("merchantName"), FONT_STYLE, TITLE_FONT_SIZE, callback);
@@ -151,7 +163,7 @@ public class MainActivity extends Activity {
 					}
 				}
 				
-				woyouService.printTextWithFont("---------其他费用---------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("------------其他费用------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("boxPrice"))
 				woyouService.printTextWithFont("餐盒\t\t\t\t\t\t1\t\t\t\t\t" + orderJo.getString("boxPrice"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
@@ -165,24 +177,26 @@ public class MainActivity extends Activity {
 				}
 				
 				if(orderJo.has("orderPrice"))
-				woyouService.printTextWithFont("已付\t\t\t\t\t\t￥" + orderJo.getString("orderPrice"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("已付\t\t￥" + orderJo.getString("orderPrice"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				woyouService.printTextWithFont("--------------------------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("consigneeAddress"))
-				woyouService.printTextWithFont(orderJo.getString("consigneeAddress"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont(orderJo.getString("consigneeAddress"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("userName"))
-				woyouService.printTextWithFont(orderJo.getString("userName"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont(orderJo.getString("userName"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("phone"))
-				woyouService.printTextWithFont(orderJo.getString("phone"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont(orderJo.getString("phone"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				woyouService.setAlignment(1, callback);
-				woyouService.printTextWithFont("**********完********", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("*****", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("#" + orderJo.getString("platformCount"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
+				woyouService.printTextWithFont("餐予者*****", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+//				woyouService.printTextWithFont("********#"+orderJo.getString("platformCount")+"餐予者********", FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(4, callback);
 				woyouService.commitPrinterBuffer();
-				
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {
@@ -202,9 +216,20 @@ public class MainActivity extends Activity {
 //				Toast.makeText(MainActivity.this.getApplicationContext(),
 //						"订单[" + orderJo.getString("orderNo") + "]小票打印完成", 2000).show();
 				// woyouService.printerSelfChecking(callback);
+				String platform_type = orderJo.getString("platform_type");
+				String platform = "";
+				if("elm".equals(platform_type)) {
+					platform = "饿了么";
+				} else if("mt".equals(platform_type)) {
+					platform = "美团外卖";
+				} else if("bdwm".equals(platform_type)) {
+					platform = "百度外卖";
+				} 
 				woyouService.enterPrinterBuffer(true);
 				woyouService.setAlignment(1, callback);
-				woyouService.printTextWithFont("*****#"+orderJo.getString("orderNum")+"餐予者********", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("*****", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("#" + orderJo.getString("platformCount"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
+				woyouService.printTextWithFont(platform + "*****", FONT_STYLE, NORMAL_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("merchantName"))
 				woyouService.printTextWithFont(orderJo.getString("merchantName"), FONT_STYLE, TITLE_FONT_SIZE, callback);
@@ -232,7 +257,7 @@ public class MainActivity extends Activity {
 					}
 				}
 				
-				woyouService.printTextWithFont("---------其他费用---------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("------------其他费用------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("boxPrice"))
 				woyouService.printTextWithFont("餐盒\t\t\t\t\t\t1\t\t\t\t\t" + orderJo.getString("boxPrice"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
@@ -246,51 +271,27 @@ public class MainActivity extends Activity {
 				}
 				
 				if(orderJo.has("orderPrice"))
-				woyouService.printTextWithFont("已付\t\t\t\t\t\t￥" + orderJo.getString("orderPrice"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("已付\t\t￥" + orderJo.getString("orderPrice"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				woyouService.printTextWithFont("--------------------------------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("consigneeAddress"))
-				woyouService.printTextWithFont(orderJo.getString("consigneeAddress"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont(orderJo.getString("consigneeAddress"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("userName"))
-				woyouService.printTextWithFont(orderJo.getString("userName"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont(orderJo.getString("userName"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				if(orderJo.has("phone"))
-				woyouService.printTextWithFont(orderJo.getString("phone"), FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont(orderJo.getString("phone"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(2, callback);// 换行 2代表换2行
 				woyouService.setAlignment(1, callback);
-				woyouService.printTextWithFont("********#"+orderJo.getString("orderNum")+"完********", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("*****", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+				woyouService.printTextWithFont("#" + orderJo.getString("platformCount"), FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
+				woyouService.printTextWithFont("餐予者*****", FONT_STYLE, NORMAL_FONT_SIZE, callback);
+//				woyouService.printTextWithFont("********#"+orderJo.getString("platformCount")+"餐予者********", FONT_STYLE, BIG_TITLE_FONT_SIZE, callback);
 				woyouService.lineWrap(4, callback);
 				woyouService.commitPrinterBuffer();
 				
-//				Map<String,Object> order = getMapForJson(orderStr);
-//				Toast.makeText(MainActivity.this.getApplicationContext(), "订单["+order.get("orderNo")+"]小票打印完成", 2000).show();
-////				woyouService.printerSelfChecking(callback);
-//				woyouService.enterPrinterBuffer(true);
-//				woyouService.setAlignment(1, callback);
-//				woyouService.printTextWithFont("---------餐予者---------", FONT_STYLE, NORMAL_FONT_SIZE, callback);
-//				woyouService.lineWrap(2, callback);//换行 2代表换2行
-//				woyouService.printTextWithFont("浏半仙贺龙店", FONT_STYLE, TITLE_FONT_SIZE, callback);
-//				woyouService.lineWrap(1, callback);
-//				woyouService.setAlignment(0, callback);
-//				woyouService.printTextWithFont("订单号："+order.get("orderNo"),FONT_STYLE, NORMAL_FONT_SIZE, callback);
-//				woyouService.lineWrap(1, callback);
-//				woyouService.printTextWithFont("辣椒炒肉\t\t\t\t\t15元",FONT_STYLE, NORMAL_FONT_SIZE, callback);
-//				woyouService.lineWrap(1, callback);
-//				woyouService.printTextWithFont("雪碧\t\t\t\t\t4元",FONT_STYLE, NORMAL_FONT_SIZE, callback);
-//				woyouService.lineWrap(1, callback);
-//				woyouService.printTextWithFont("餐盒费\t\t\t\t\t5元",FONT_STYLE, NORMAL_FONT_SIZE, callback);
-//				woyouService.lineWrap(2, callback);
-//				woyouService.printTextWithFont("合计\t\t\t\t\t24元",FONT_STYLE, NORMAL_FONT_SIZE, callback);
-//				woyouService.lineWrap(2, callback);
-//				woyouService.setAlignment(1, callback);
-//				Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.this.getApplicationContext().getResources(), R.drawable.ic_launcher);
-//				woyouService.printBitmap(bitmap, callback);
-//				woyouService.lineWrap(1, callback);
-//				woyouService.printTextWithFont("餐予者\t为外卖而生", FONT_STYLE, NORMAL_FONT_SIZE, callback);
-//				woyouService.lineWrap(4, callback);
-//				woyouService.commitPrinterBuffer();
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {

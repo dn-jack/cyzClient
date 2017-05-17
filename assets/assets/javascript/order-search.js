@@ -158,17 +158,22 @@
 		bindEvent : function() {
 			var that = this;
 			var opt = this.opt;
-			this.$ool.on("webkitAnimationStart", ".order-search ul li",
-					function() {
-						that.$ool.data("nodata-display").hide(true);
-					});
-			this.$ool.on("click", ".handle .print", function(){
-				var $order = $(this).parents("li:first");
-				var bind = $order.data("bind");
-				alert(this);
-//				alert(bind);
-				//javascript:cyz.queryOrderPrint(JSON.stringify(bind));
+			this.$ool.on("webkitAnimationStart", ".order-search ul li",function() {
+				that.$ool.data("nodata-display").hide(true);
 			});
+//			this.$ool.on("click", ".handle .print", function(){
+//				var $order = $(this).parents("li:first");
+//				var bind = $order.data("bind");
+//				if (that.flag === true){ 
+//					javascript:cyz.queryOrderPrint(JSON.stringify(bind));
+//					that.flag = false;
+//				}
+//				setTimeout(function(){
+//					that.flag = true;
+//				}, 1000);
+//			});
+			
+				
 		}
 	};
 
@@ -212,8 +217,9 @@ $(function() {
 	  orderList.addQuery('beginTime',date);
 	  orderList.load();
 	});
+    
 	$(".filter input[type=radio]").on("ifChecked", function(){
-		console.log(2)
+		$(".date-form").hide();
 		if($(this).val() === 'other') {
 			$dateForm.css("visibility", "visible");
 			orderList.addQuery('beginTime', date||getDate());
@@ -225,12 +231,22 @@ $(function() {
 		orderList.addQuery($(this).attr("name"),$(this).val());
 		orderList.load();
 	});
+	$(".filter #radio-5").on("ifChecked", function(){
+		$(".date-form").show();
+	});
 	//复制功能
 	$(document.body).on("click", ".copy-order", function(){
 		$(this).next(".content").select();
 		document.execCommand("Copy"); // 执行浏览器复制命令
 		alert("复制成功！");
-	})
+	});
+	
+	$(document.body).on("click", ".handle .print", function(){
+		var $order = $(this).parents("li:first");
+		var bind = $order.data("bind");
+		javascript:cyz.queryOrderPrint(JSON.stringify(bind));
+		javascript:cyz.queryOrderPrint(JSON.stringify(bind));
+	});
 });
 function getDate(time){
   var date = time?new Date(time):new Date();
@@ -284,5 +300,6 @@ $(".mobile-date").val(getNowFormatDate());
 $(".mobile-date").change(function(){
 	var orderList = $.orderList();
 	orderList.addQuery('beginTime', $(".mobile-date").val());
+//	alert($(".mobile-date").val())
 	orderList.load();
 })

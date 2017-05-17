@@ -23,6 +23,14 @@
       	$(".header-menu-mobile").trigger("click");
       })
     },
+    logoout: function(){
+		localStorage.removeItem("elemShops");
+		localStorage.removeItem("meituanShops");
+		localStorage.removeItem("baiduShops");
+		localStorage.removeItem("shopIds");
+		localStorage.removeItem("username");
+		localStorage.removeItem("password");
+    },
     slideTag: function(self){
         self.$el.find('li').on('click',function(){
             $(this).children("a").addClass("index").parent().siblings().children("a").removeClass("index");
@@ -34,9 +42,12 @@
                 localStorage.setItem("cmenu", $(this).index());
             }
             var href = $(this).children("a").data("href");
-            if(href){
-                window.location.href = href;
-            }
+            if(href=="login"){
+        		self.logoout();
+	            window.location.href = href;
+	        } else if(href) {
+	        	window.location.href = href;
+	        }
             return false;
         });
         self.$el.find('.memMenuTitle').click(function(){
